@@ -7,4 +7,4 @@
 5. Do not deploy to production endpoints or alter remote version JSON unless the user explicitly requests a release/deployment operation.
 6. Keep generated output in `build/` or `dist/`; never commit JAR, EXE, logs, diagnostics, or third-party Minecraft assets.
 7. Use the external test environment selected by `POTATO_TEST_CORE`; never hardcode a personal PCL or drive path.
-8. The project does not accept Pull Requests or external contributions. Do not add contribution automation without an explicit policy change.
+8. Issues and Pull Requests are welcome. Apply the same build, test, security, and repository-hygiene standards to external contributions as to maintainer changes.

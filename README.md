@@ -2,7 +2,7 @@
 
 Potato 是一套面向 Minecraft/PCL 客户端的启动前资源同步系统。它通过 Java Agent 在 Minecraft 和 Fabric 初始化之前运行，检查并启动独立更新器，在游戏加载前完成受管模组、资源包、光影包和启动器资源的同步。
 
-> 本仓库仅用于公开源代码和项目透明度展示。项目不接受 Pull Request、外部贡献、功能请求或 GitHub 技术支持。
+本项目采用 MIT License 开源。欢迎通过 Issues、Discussions 和 Pull Requests 参与讨论与改进。
 
 ## 架构概览
 
@@ -56,8 +56,9 @@ PCL / Java
 - 不提交 JAR、EXE、日志、诊断现场、测试客户端或第三方游戏资源。
 - 不在 GitHub Actions 中自动部署生产对象存储。
 - 正式发布必须由 Git 标签、GitHub Release 资产和 SHA-256 清单共同标识。
+- Issue 和 Pull Request 应避免包含凭据、私人客户端数据或未经授权分发的第三方资源。
 - 安全问题处理方式见 [SECURITY.md](SECURITY.md)。
 
 ## 许可
 
-本仓库当前不是开源许可项目。除 GitHub 平台展示所需权利外，未授予复制、修改、分发或再许可权利。详见 [LICENSE](LICENSE)。
+本项目采用 [MIT License](LICENSE)，允许使用、复制、修改和分发，并保留许可证要求的版权与许可声明。
