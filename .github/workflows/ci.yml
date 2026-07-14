@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle cache
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Audit tracked repository content
+        shell: pwsh
+        run: .\tools\repository-audit.ps1
+
+      - name: Test and build release products
+        shell: pwsh
+        run: .\tools\build-release.ps1
+
+      - name: Upload build and test evidence
+        uses: actions/upload-artifact@v6
+        with:
+          name: potato-${{ github.sha }}
+          path: |
+            dist/*
+            **/build/reports/tests/test/**
+            **/build/test-results/test/**
+          if-no-files-found: error
+          retention-days: 14

@@ -1,0 +1,71 @@
+# Gradle and Java build state
+.gradle/
+build/
+**/build/
+out/
+bin/
+**/bin/
+result/
+dist/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Native and packaged build products
+*.exe
+*.dll
+*.pdb
+*.zip
+*.7z
+*.nupkg
+
+# Runtime state, logs, and temporary files
+*.log
+*.tmp
+*.temp
+*.download
+*.updating
+hs_err_pid*
+replay_pid*
+diagnostics/
+test-results/
+artifacts/
+
+# Local Minecraft/PCL test environments
+/test_place/
+/test-env/
+/.minecraft/
+/PCL/
+/A_Potato_Seed/
+/A_Potato_Updater/
+/mods/
+/resourcepacks/
+/shaderpacks/
+
+# Historical investigation material
+tmp_*/
+IndependentPotatoUpdaterDebug/
+verify_first_upload_guide*/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+local.properties
+*.local.json
+*.local.ps1
+*.keystore
+*.pfx
+*.pem
+
+# IDE and operating-system files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Administrator payloads must never enter source control
+admin-tool/Potato_Pack/
+admin-tool/RESULT/

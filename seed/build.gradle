@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+group = 'com.potato.seed'
+version = '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.10.1'
+    compileOnly 'net.fabricmc:fabric-loader:0.14.22'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    archiveFileName = 'Potato_Seed_Internal.jar'
+}

@@ -1,0 +1,48 @@
+{
+  "optionalMods": [
+    "Potato_Pack/game_core_dir/mods/Indium.jar",
+    "Potato_Pack/game_core_dir/mods/Iris.jar",
+    "Potato_Pack/game_core_dir/mods/Lithium.jar",
+    "Potato_Pack/game_core_dir/mods/reeses_sodium_options.jar",
+    "Potato_Pack/game_core_dir/mods/sodium-extra.jar",
+    "Potato_Pack/game_core_dir/mods/Sodium.jar"
+  ],
+  "mods": [
+    {
+      "path": "Potato_Pack/game_core_dir/mods/Indium.jar",
+      "name": "Indium.jar",
+      "remark": "视觉优化：补充 Sodium 的渲染兼容支持；老玩家请勿勾选！",
+      "placement": "bottom"
+    },
+    {
+      "path": "Potato_Pack/game_core_dir/mods/Iris.jar",
+      "name": "Iris.jar",
+      "remark": "视觉优化：提供光影加载支持；老玩家请勿勾选！",
+      "placement": "bottom"
+    },
+    {
+      "path": "Potato_Pack/game_core_dir/mods/Lithium.jar",
+      "name": "Lithium.jar",
+      "remark": "性能优化：优化游戏逻辑与实体计算，通常可提升整体运行效率；老玩家请勿勾选！",
+      "placement": "bottom"
+    },
+    {
+      "path": "Potato_Pack/game_core_dir/mods/reeses_sodium_options.jar",
+      "name": "reeses_sodium_options.jar",
+      "remark": "性能优化：重做 Sodium 设置界面，方便调整图形性能选项；老玩家请勿勾选！",
+      "placement": "bottom"
+    },
+    {
+      "path": "Potato_Pack/game_core_dir/mods/sodium-extra.jar",
+      "name": "sodium-extra.jar",
+      "remark": "性能优化：为 Sodium 增加更多细节开关，方便进一步压榨帧率；老玩家请勿勾选！",
+      "placement": "bottom"
+    },
+    {
+      "path": "Potato_Pack/game_core_dir/mods/Sodium.jar",
+      "name": "Sodium.jar",
+      "remark": "性能优化：替换并优化渲染管线，通常能显著提升 FPS；老玩家请勿勾选！",
+      "placement": "bottom"
+    }
+  ]
+}

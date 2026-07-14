@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.potato.seed.agent'
+version = '1.0.0-SNAPSHOT'
+
+dependencies {
+    implementation project(':seed')
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def seedMainOutput = project(':seed').sourceSets.main.output
+
+jar {
+    archiveFileName = 'Potato_Seed.jar'
+
+    manifest {
+        attributes(
+            'Premain-Class': 'com.potato.seed.agent.PotatoSeedAgent',
+            'Main-Class': 'com.potato.seed.agent.PotatoSeedAgent'
+        )
+    }
+
+    from(seedMainOutput)
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

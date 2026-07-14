@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+group = 'com.potato.updater'
+version = 'v2.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.formdev:flatlaf:3.5.4'
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// 供脱机或独立子进程运行的 fat-jar 配置
+jar {
+    archiveFileName = 'Potato_Updater.jar'
+
+    manifest {
+        attributes(
+            'Main-Class': 'com.potato.updater.PotatoUpdater'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
