@@ -43,6 +43,12 @@ jobs:
           .\tools\repository-audit.ps1
           .\tools\build-release.ps1
 
+      - name: Smoke test release products
+        shell: pwsh
+        env:
+          POTATO_SYNC_BASE_URL: ${{ secrets.POTATO_SYNC_BASE_URL }}
+        run: .\tools\smoke-test-products.ps1 -SkipBuild
+
       - name: Create or update draft release
         shell: pwsh
         env:

@@ -8,9 +8,11 @@ Run on every local handoff and every GitHub push:
 
 ```powershell
 .\gradlew.bat clean test
+.\tools\build-release.ps1
+.\tools\smoke-test-products.ps1 -SkipBuild
 ```
 
-Current tests cover Agent path derivation, managed-root detection, path-contract rejection, DiffEngine behavior, and GUI path display helpers. New behavior in download, state, resource-pack, and helper flows should add tests rather than relying only on a production client.
+Current tests cover Agent path derivation, endpoint injection, managed-root detection, path-contract rejection, DiffEngine behavior, and GUI path display helpers. The product smoke test loads Seed as a real Java Agent, starts Updater in its offline smoke mode, and starts the Installer in its non-installing smoke mode. New behavior in download, state, resource-pack, and helper flows should add tests rather than relying only on a production client.
 
 ## 2. External integration client
 

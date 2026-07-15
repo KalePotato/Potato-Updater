@@ -2,6 +2,7 @@ package com.potato.updater;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.potato.updater.config.EndpointDefaults;
 import com.potato.updater.config.UpdaterConfig;
 import com.potato.updater.config.UpdaterConfigManager;
 import com.potato.updater.core.DiffEngine;
@@ -21,6 +22,7 @@ import com.potato.updater.util.UpdaterErrorLogger;
 import javax.swing.SwingUtilities;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -59,6 +61,11 @@ public class PotatoUpdater {
     }
 
     public static void main(String[] args) {
+        if (hasFlag(args, "--smoke-test")) {
+            runSmokeTest();
+            return;
+        }
+
         if (handleHelperMode(args)) {
             return;
         }
@@ -416,6 +423,28 @@ public class PotatoUpdater {
         }
         shrinkToCompactError(gui, "deploy failed");
         waitForUserErrorDecision(gui);
+    }
+
+    private static void runSmokeTest() {
+        try {
+            URI seedConfigUri = URI.create(EndpointDefaults.seedConfigUrl());
+            URI storageConfigUri = URI.create(EndpointDefaults.storageConfigUrl());
+            if (!seedConfigUri.isAbsolute() || seedConfigUri.getHost() == null
+                    || !storageConfigUri.isAbsolute() || storageConfigUri.getHost() == null) {
+                throw new IllegalStateException("Build endpoints are not absolute URLs");
+            }
+            if (!seedConfigUri.getHost().equalsIgnoreCase(storageConfigUri.getHost())) {
+                throw new IllegalStateException("Build endpoints do not use the same sync host");
+            }
+
+            new Gson().toJson(new UpdaterConfig());
+            Class.forName("com.formdev.flatlaf.FlatLaf", false, PotatoUpdater.class.getClassLoader());
+            System.out.println("POTATO_UPDATER_SMOKE_TEST_OK");
+        } catch (Throwable error) {
+            System.err.println("POTATO_UPDATER_SMOKE_TEST_FAILED: " + error.getMessage());
+            error.printStackTrace();
+            System.exit(EXIT_CODE_ABORT);
+        }
     }
 
     private static void runSeedSelfUpdateIfNeeded(UpdaterGUI gui, PathResolver pathResolver) {

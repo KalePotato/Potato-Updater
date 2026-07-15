@@ -51,6 +51,12 @@ namespace PotatoSeedInstaller
         {
             ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072 | SecurityProtocolType.Tls12;
 
+            if (HasFlag(args, "--smoke-test"))
+            {
+                Environment.ExitCode = RunSmokeTest();
+                return;
+            }
+
             InstallOptions cliOptions;
             if (TryParseCli(args, out cliOptions))
             {
@@ -75,6 +81,45 @@ namespace PotatoSeedInstaller
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new InstallerForm());
+        }
+
+        private static bool HasFlag(string[] args, string expected)
+        {
+            if (args == null)
+            {
+                return false;
+            }
+
+            foreach (string arg in args)
+            {
+                if (expected.Equals(arg, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static int RunSmokeTest()
+        {
+            Uri seedDownloadUri;
+            Uri seedConfigUri;
+            bool valid = Uri.TryCreate(BuildEndpoints.SeedDownloadUrl, UriKind.Absolute, out seedDownloadUri) &&
+                         Uri.TryCreate(BuildEndpoints.SeedConfigUrl, UriKind.Absolute, out seedConfigUri) &&
+                         seedDownloadUri != null &&
+                         seedConfigUri != null &&
+                         !string.IsNullOrWhiteSpace(seedDownloadUri.Host) &&
+                         seedDownloadUri.Host.Equals(seedConfigUri.Host, StringComparison.OrdinalIgnoreCase) &&
+                         (seedDownloadUri.Scheme.Equals("http", StringComparison.OrdinalIgnoreCase) ||
+                          seedDownloadUri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase));
+            if (!valid)
+            {
+                SafeWriteLine("POTATO_INSTALLER_SMOKE_TEST_FAILED");
+                return 1;
+            }
+
+            SafeWriteLine("POTATO_INSTALLER_SMOKE_TEST_OK");
+            return 0;
         }
 
         private static void SafeWriteLine(string value)

@@ -33,6 +33,10 @@ jobs:
         shell: pwsh
         run: .\tools\build-release.ps1 -AllowPlaceholderEndpoint
 
+      - name: Smoke test release products
+        shell: pwsh
+        run: .\tools\smoke-test-products.ps1 -SkipBuild -AllowPlaceholderEndpoint
+
       - name: Upload test evidence
         uses: actions/upload-artifact@v6
         with:
