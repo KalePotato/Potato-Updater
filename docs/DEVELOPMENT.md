@@ -54,6 +54,8 @@ Never add production credentials or private endpoints to a tracked file. Public 
 
 The tracked endpoint profile uses the reserved `https://example.invalid` host. Private builds can set `POTATO_SYNC_BASE_URL` or copy `config/endpoints.example.properties` to the ignored `config/endpoints.local.properties`. The environment variable takes precedence. Java resources and the Windows installer receive the selected value during the build, so private endpoints never need to appear in tracked source.
 
+`tools/build-release.ps1` refuses to package when only the placeholder is available and prints the two supported configuration methods. The `-AllowPlaceholderEndpoint` switch exists only for non-distributable CI verification.
+
 The production deployment channel is not part of normal build/test commands.
 
 ## Design invariants

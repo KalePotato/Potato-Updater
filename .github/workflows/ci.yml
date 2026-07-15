@@ -31,7 +31,7 @@ jobs:
 
       - name: Test and build release products
         shell: pwsh
-        run: .\tools\build-release.ps1
+        run: .\tools\build-release.ps1 -AllowPlaceholderEndpoint
 
       - name: Upload test evidence
         uses: actions/upload-artifact@v6

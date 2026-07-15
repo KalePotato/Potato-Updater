@@ -20,7 +20,11 @@ if ([string]::IsNullOrWhiteSpace($syncBaseUrl) -and
 }
 
 if ([string]::IsNullOrWhiteSpace($syncBaseUrl)) {
-    $syncBaseUrl = 'https://example.invalid'
+    if ($env:POTATO_ALLOW_PLACEHOLDER_ENDPOINT -eq '1') {
+        $syncBaseUrl = 'https://example.invalid'
+    } else {
+        throw 'No sync endpoint is configured. Set POTATO_SYNC_BASE_URL or create config/endpoints.local.properties before building the installer.'
+    }
 }
 $syncBaseUrl = $syncBaseUrl.Trim().TrimEnd('/')
 
@@ -29,6 +33,10 @@ if (-not [Uri]::TryCreate($syncBaseUrl, [UriKind]::Absolute, [ref]$uri) -or
     [string]::IsNullOrWhiteSpace($uri.Host) -or
     ($uri.Scheme -ne 'http' -and $uri.Scheme -ne 'https')) {
     throw 'POTATO_SYNC_BASE_URL or syncBaseUrl must be an absolute HTTP(S) URL.'
+}
+if ($uri.Host.Equals('example.invalid', [StringComparison]::OrdinalIgnoreCase) -and
+    $env:POTATO_ALLOW_PLACEHOLDER_ENDPOINT -ne '1') {
+    throw 'The placeholder endpoint is not allowed for installer packaging. Configure a private endpoint first.'
 }
 
 $outputDirectory = Split-Path -Parent ([IO.Path]::GetFullPath($OutputPath))
