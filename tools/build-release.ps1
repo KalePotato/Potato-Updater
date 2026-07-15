@@ -58,6 +58,7 @@ if (-not $distDir.StartsWith($repoRoot + [IO.Path]::DirectorySeparatorChar, [Str
 
 Push-Location $repoRoot
 $previousAllowPlaceholder = $env:POTATO_ALLOW_PLACEHOLDER_ENDPOINT
+$previousJavaHome = $env:JAVA_HOME
 try {
     if ($AllowPlaceholderEndpoint) {
         $env:POTATO_ALLOW_PLACEHOLDER_ENDPOINT = '1'
@@ -65,13 +66,25 @@ try {
         Remove-Item Env:POTATO_ALLOW_PLACEHOLDER_ENDPOINT -ErrorAction SilentlyContinue
     }
 
-    $javaVersionText = (& cmd.exe /d /c "java -version 2>&1" | Out-String)
+    $javaCommand = Get-Command java.exe -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($null -eq $javaCommand) {
+        throw 'Unable to find Java on PATH. Install and select JDK 17 or newer.'
+    }
+    $javaExecutable = $javaCommand.Source
+    $selectedJavaHome = Split-Path -Parent (Split-Path -Parent $javaExecutable)
+    if (-not (Test-Path -LiteralPath (Join-Path $selectedJavaHome 'bin\javac.exe') -PathType Leaf)) {
+        throw "Java on PATH is not part of a JDK: $javaExecutable. Select JDK 17 or newer."
+    }
+
+    $javaVersionText = (& cmd.exe /d /c "`"$javaExecutable`" -version 2>&1" | Out-String)
     if ($LASTEXITCODE -ne 0 -or $javaVersionText -notmatch 'version\s+"(?<major>\d+)') {
         throw 'Unable to determine the active Java version. Install and select JDK 17.'
     }
     if ([int]$Matches.major -lt 17) {
         throw "JDK 17 or newer is required. Active runtime:`n$javaVersionText"
     }
+    $env:JAVA_HOME = $selectedJavaHome
+    Write-Host "Build JDK: $selectedJavaHome" -ForegroundColor Green
 
     $gradleTasks = @('clean')
     if (-not $SkipTests) {
@@ -127,6 +140,11 @@ finally {
         Remove-Item Env:POTATO_ALLOW_PLACEHOLDER_ENDPOINT -ErrorAction SilentlyContinue
     } else {
         $env:POTATO_ALLOW_PLACEHOLDER_ENDPOINT = $previousAllowPlaceholder
+    }
+    if ($null -eq $previousJavaHome) {
+        Remove-Item Env:JAVA_HOME -ErrorAction SilentlyContinue
+    } else {
+        $env:JAVA_HOME = $previousJavaHome
     }
     Pop-Location
 }

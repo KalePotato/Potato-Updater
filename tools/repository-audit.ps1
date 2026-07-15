@@ -64,6 +64,23 @@ try {
             if ($endpointLeaks.Count -gt 0) {
                 throw "The private endpoint host was found in tracked files:`n$($endpointLeaks -join "`n")"
             }
+
+            $historyEndpointLeaks = @()
+            $commits = @(git rev-list --all)
+            if ($LASTEXITCODE -ne 0) {
+                throw 'Unable to enumerate Git history while scanning for the private endpoint.'
+            }
+            foreach ($commit in $commits) {
+                $commitLeaks = @(git grep -l -I -F -e $privateUri.Host $commit -- . 2>$null)
+                $historyGrepExitCode = $LASTEXITCODE
+                if ($historyGrepExitCode -gt 1) {
+                    throw "Unable to scan commit $commit for the private endpoint (git grep exit code $historyGrepExitCode)."
+                }
+                $historyEndpointLeaks += $commitLeaks
+            }
+            if ($historyEndpointLeaks.Count -gt 0) {
+                throw "The private endpoint host was found in Git history:`n$($historyEndpointLeaks -join "`n")"
+            }
         }
     }
 
