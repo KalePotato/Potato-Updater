@@ -1,4 +1,4 @@
-# Potato
+# Potato Updater
 
 ## 中文
 
