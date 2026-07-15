@@ -6,6 +6,8 @@ Potato Updater 是一个 Minecraft 启动前更新工具。它通过 Java Agent 
 
 项目尚未做好分发准备，暂时不提供具体的操作说明。
 
+目前同步服务地址会在构建时写入产物，因此暂时无法提供既不包含服务地址、又能直接使用的通用 Release。公开分发前需要改为在运行时配置服务地址。
+
 项目包含：
 
 - `seed-agent` / `seed`：启动 Java Agent 并检查更新器。
@@ -25,6 +27,8 @@ Potato Updater 是一个 Minecraft 启动前更新工具。它通过 Java Agent 
 Potato Updater is a pre-launch updater for Minecraft. It runs through a Java Agent before the game loads, then checks a remote manifest and synchronizes managed mods, resource packs, shader packs, and launcher files.
 
 The project is not ready for distribution, so detailed usage instructions are not currently provided.
+
+The sync service address is currently embedded at build time, so the project cannot yet provide a general-purpose Release that is both ready to use and free of a service address. Runtime endpoint configuration is required before public distribution.
 
 The project contains:
 
