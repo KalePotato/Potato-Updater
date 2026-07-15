@@ -13,7 +13,7 @@
 Create and push an annotated tag:
 
 ```powershell
-git tag -a v2.2.0 -m "Potato v2.2.0"
+git tag -a v2.2.0 -m "Potato Updater v2.2.0"
 git push origin v2.2.0
 ```
 

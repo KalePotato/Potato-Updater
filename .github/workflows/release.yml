@@ -42,5 +42,5 @@ jobs:
           if ($LASTEXITCODE -eq 0) {
             gh release upload $tag dist/* --clobber
           } else {
-            gh release create $tag dist/* --draft --generate-notes --title "Potato $tag"
+            gh release create $tag dist/* --draft --generate-notes --title "Potato Updater $tag"
           }

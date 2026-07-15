@@ -1,4 +1,4 @@
-# Potato architecture
+# Potato Updater architecture
 
 ## Runtime lifecycle
 
