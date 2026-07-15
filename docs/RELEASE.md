@@ -2,6 +2,8 @@
 
 ## Version and source freeze
 
+Configure the repository Actions secret `POTATO_SYNC_BASE_URL` with the endpoint profile intended for the release. Tag builds stop before packaging when this secret is absent; ordinary CI never publishes its placeholder binaries.
+
 1. Update the application version and release notes.
 2. Run `tools/build-release.ps1` locally.
 3. Deploy to the persistent and clean test clients.

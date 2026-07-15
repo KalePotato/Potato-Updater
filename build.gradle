@@ -1,3 +1,27 @@
+def endpointProperties = new Properties()
+def localEndpointFile = file('config/endpoints.local.properties')
+if (localEndpointFile.isFile()) {
+    localEndpointFile.withInputStream { endpointProperties.load(it) }
+}
+
+def syncBaseUrl = System.getenv('POTATO_SYNC_BASE_URL')
+if (syncBaseUrl == null || syncBaseUrl.isBlank()) {
+    syncBaseUrl = endpointProperties.getProperty('syncBaseUrl', 'https://example.invalid')
+}
+syncBaseUrl = syncBaseUrl.trim().replaceAll('/+$', '')
+
+def syncUri
+try {
+    syncUri = new URI(syncBaseUrl)
+} catch (Exception exception) {
+    throw new GradleException('POTATO_SYNC_BASE_URL or syncBaseUrl must be an absolute HTTP(S) URL.', exception)
+}
+if (!syncUri.isAbsolute() || syncUri.host == null || !(syncUri.scheme in ['http', 'https'])) {
+    throw new GradleException('POTATO_SYNC_BASE_URL or syncBaseUrl must be an absolute HTTP(S) URL.')
+}
+
+ext.potatoSyncBaseUrl = syncBaseUrl
+
 subprojects {
     apply plugin: 'java'
 

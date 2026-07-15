@@ -14,7 +14,7 @@ Current tests cover Agent path derivation, managed-root detection, path-contract
 
 ## 2. External integration client
 
-The Minecraft/PCL test installation must live outside the repository. Select it for the current shell:
+The Minecraft launcher test installation must live outside the repository. Select it for the current shell:
 
 ```powershell
 $env:POTATO_TEST_CORE = 'C:\Potato-Test\persistent\.minecraft\versions\dev'

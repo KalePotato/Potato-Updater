@@ -23,6 +23,10 @@ try {
         }
         if ($normalized -match '\.jar$' -and $normalized -ne 'gradle/wrapper/gradle-wrapper.jar') {
             $forbidden += $path
+            continue
+        }
+        if ($normalized -eq 'config/endpoints.local.properties') {
+            $forbidden += $path
         }
     }
     if ($forbidden.Count -gt 0) {
@@ -36,6 +40,31 @@ try {
     }
     if ($personalPaths.Count -gt 0) {
         throw "Personal absolute paths were found in tracked files:`n$($personalPaths -join "`n")"
+    }
+
+    $localEndpointConfig = Join-Path $repoRoot 'config\endpoints.local.properties'
+    if (Test-Path -LiteralPath $localEndpointConfig -PathType Leaf) {
+        $privateBaseUrl = $null
+        foreach ($line in Get-Content -LiteralPath $localEndpointConfig -Encoding UTF8) {
+            if ($line -match '^\s*syncBaseUrl\s*=\s*(?<value>.+?)\s*$') {
+                $privateBaseUrl = $Matches.value
+                break
+            }
+        }
+
+        $privateUri = $null
+        if (-not [string]::IsNullOrWhiteSpace($privateBaseUrl) -and
+            [Uri]::TryCreate($privateBaseUrl, [UriKind]::Absolute, [ref]$privateUri) -and
+            -not [string]::IsNullOrWhiteSpace($privateUri.Host)) {
+            $endpointLeaks = @(git grep -l -I -F -- $privateUri.Host -- . 2>$null)
+            $endpointGrepExitCode = $LASTEXITCODE
+            if ($endpointGrepExitCode -gt 1) {
+                throw "Unable to scan tracked files for the private endpoint (git grep exit code $endpointGrepExitCode)."
+            }
+            if ($endpointLeaks.Count -gt 0) {
+                throw "The private endpoint host was found in tracked files:`n$($endpointLeaks -join "`n")"
+            }
+        }
     }
 
     $oversized = @()

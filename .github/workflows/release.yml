@@ -26,8 +26,19 @@ jobs:
       - name: Set up Gradle cache
         uses: gradle/actions/setup-gradle@v6
 
+      - name: Validate release endpoint profile
+        shell: pwsh
+        env:
+          POTATO_SYNC_BASE_URL: ${{ secrets.POTATO_SYNC_BASE_URL }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:POTATO_SYNC_BASE_URL)) {
+            throw 'Configure the POTATO_SYNC_BASE_URL repository secret before creating a release tag.'
+          }
+
       - name: Audit, test, and build
         shell: pwsh
+        env:
+          POTATO_SYNC_BASE_URL: ${{ secrets.POTATO_SYNC_BASE_URL }}
         run: |
           .\tools\repository-audit.ps1
           .\tools\build-release.ps1

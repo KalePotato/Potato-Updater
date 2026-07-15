@@ -33,12 +33,11 @@ jobs:
         shell: pwsh
         run: .\tools\build-release.ps1
 
-      - name: Upload build and test evidence
+      - name: Upload test evidence
         uses: actions/upload-artifact@v6
         with:
-          name: potato-updater-${{ github.sha }}
+          name: potato-updater-tests-${{ github.sha }}
           path: |
-            dist/*
             **/build/reports/tests/test/**
             **/build/test-results/test/**
           if-no-files-found: error

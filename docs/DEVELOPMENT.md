@@ -52,6 +52,8 @@ seed-installer/build/Potato_Seed_Installer.exe
 
 Never add production credentials or private endpoints to a tracked file. Public JSON shapes belong in `config/examples/`. Machine-specific values belong in environment variables or ignored `*.local.*` files.
 
+The tracked endpoint profile uses the reserved `https://example.invalid` host. Private builds can set `POTATO_SYNC_BASE_URL` or copy `config/endpoints.example.properties` to the ignored `config/endpoints.local.properties`. The environment variable takes precedence. Java resources and the Windows installer receive the selected value during the build, so private endpoints never need to appear in tracked source.
+
 The production deployment channel is not part of normal build/test commands.
 
 ## Design invariants

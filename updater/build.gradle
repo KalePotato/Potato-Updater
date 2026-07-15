@@ -16,6 +16,15 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+def syncBaseUrl = rootProject.ext.potatoSyncBaseUrl
+
+processResources {
+    inputs.property('potatoSyncBaseUrl', syncBaseUrl)
+    filesMatching('potato-endpoints.properties') {
+        expand(syncBaseUrl: syncBaseUrl)
+    }
+}
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }

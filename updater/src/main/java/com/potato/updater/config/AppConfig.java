@@ -21,8 +21,4 @@ public class AppConfig {
     public static final String LOCAL_STATE_FILE = "state.json";
     public static final String LOCAL_MANIFEST_FILE = "manifest.json";
 
-    // ======= 测试默认配置，实际使用可能通过 seed 的 config 获取 =======
-    // 默认的 R2 存储节点引导地址
-    public static final String DEFAULT_BOOTSTRAP_URL = "https://example-r2-url.com/potato_bootstrap.json";
-
 }

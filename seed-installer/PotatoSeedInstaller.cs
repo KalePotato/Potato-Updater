@@ -459,7 +459,7 @@ namespace PotatoSeedInstaller
 
     internal static class InstallerLogic
     {
-        private const string DownloadUrl = "https://example.invalid/Potato_Seed.jar";
+        private static readonly string DownloadUrl = BuildEndpoints.SeedDownloadUrl;
         private const string RegistryPath = @"Software\PCL";
         private const string RegistryValueName = "LaunchAdvanceJvm";
         private const int DownloadMaxAttempts = 3;
@@ -777,7 +777,7 @@ namespace PotatoSeedInstaller
             string json = "{\r\n" +
                           "  \"enableSeed\": true,\r\n" +
                           "  \"enableUpdaterCheck\": true,\r\n" +
-                          "  \"remoteConfigUrl\": \"https://example.invalid/seed.json\",\r\n" +
+                          "  \"remoteConfigUrl\": \"" + BuildEndpoints.SeedConfigUrl + "\",\r\n" +
                           "  \"updaterDirName\": \"A_Potato_Updater\",\r\n" +
                           "  \"updaterJarName\": \"Potato_Updater.jar\"\r\n" +
                           "}";

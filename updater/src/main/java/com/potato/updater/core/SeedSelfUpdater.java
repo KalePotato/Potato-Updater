@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.potato.updater.config.EndpointDefaults;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +28,7 @@ import java.util.stream.Stream;
 
 public final class SeedSelfUpdater {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final String DEFAULT_SEED_CONFIG_URL = "https://example.invalid/seed.json";
+    private static final String DEFAULT_SEED_CONFIG_URL = EndpointDefaults.seedConfigUrl();
     private static final String SEED_STATE_FILE = "seed_state.json";
     private static final String SEED_CONFIG_FILE = "seed_config.json";
     private static final String SEED_VERSION_FILE = "seed_version.json";

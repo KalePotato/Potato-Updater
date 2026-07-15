@@ -1,7 +1,5 @@
 # Contributing
 
-Issues, discussions, and pull requests are welcome.
-
 Before submitting a change:
 
 1. Use JDK 17 and the committed Gradle Wrapper.
@@ -10,6 +8,6 @@ Before submitting a change:
 4. Keep generated binaries, runtime clients, logs, credentials, and third-party Minecraft assets out of Git.
 5. Preserve the `game_core_dir` and `launcher_dir` path-containment guarantees.
 
-Pull requests should briefly explain the problem, the chosen solution, and how the change was verified. Small, focused changes are easier to review, but early proposals and exploratory issues are also welcome.
+Changes should briefly explain the problem, the chosen solution, and how the result was verified.
 
 By contributing, you agree that your contribution is licensed under the repository's MIT License.

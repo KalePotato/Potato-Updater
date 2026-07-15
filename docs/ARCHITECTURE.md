@@ -3,7 +3,7 @@
 ## Runtime lifecycle
 
 ```text
-PCL starts the Minecraft JVM
+The game launcher starts the Minecraft JVM
   -> -javaagent:Potato_Seed.jar
   -> PotatoSeedAgent.premain()
   -> resolve gameCoreDir
@@ -54,7 +54,7 @@ Owns:
 
 ### `seed-installer`
 
-A Windows Forms/.NET Framework installer. It downloads `Potato_Seed.jar`, removes legacy Seed placements, writes `-javaagent:Potato_Seed.jar` into PCL version settings and compatible version JSON, invalidates generated launcher state, and optionally restarts PCL.
+A Windows Forms/.NET Framework installer. It downloads `Potato_Seed.jar`, removes legacy Seed placements, writes `-javaagent:Potato_Seed.jar` into supported launcher settings and compatible version JSON, invalidates generated launcher state, and optionally restarts the launcher.
 
 ## Managed paths
 

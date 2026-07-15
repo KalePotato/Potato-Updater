@@ -15,7 +15,7 @@ public class UpdaterConfig {
     private boolean enableStorageTargetUrl = true;
 
     // 服务端存储路由地址 (storage.json)
-    private String storageTargetUrl = "https://example.invalid/storage.json";
+    private String storageTargetUrl = EndpointDefaults.storageConfigUrl();
 
     // 自定义直达目标地址 (当 enableStorageTargetUrl=false 时生效)
     private String customTargetUrl = "";

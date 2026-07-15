@@ -12,7 +12,7 @@ public class SeedConfig {
 
     private boolean enableSeed = true;
     private boolean enableUpdaterCheck = true;
-    private String remoteConfigUrl = "https://example.invalid/seed.json";
+    private String remoteConfigUrl = EndpointDefaults.seedConfigUrl();
 
     // 内部存放 Updater 的目录名和 jar 名
     private String updaterDirName = "A_Potato_Updater";

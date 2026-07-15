@@ -13,6 +13,15 @@ dependencies {
     compileOnly 'net.fabricmc:fabric-loader:0.14.22'
 }
 
+def syncBaseUrl = rootProject.ext.potatoSyncBaseUrl
+
+processResources {
+    inputs.property('potatoSyncBaseUrl', syncBaseUrl)
+    filesMatching('potato-endpoints.properties') {
+        expand(syncBaseUrl: syncBaseUrl)
+    }
+}
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
